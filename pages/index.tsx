@@ -69,7 +69,7 @@ export default function Home() {
             </div>
             <div style={{margin: 8}}>
                 <TableContainer component={Paper}>
-                    <Table>
+                    <Table size="small">
                         <TableHead>
                             <TableRow>
                                 <StyledTableCell>No.</StyledTableCell>
