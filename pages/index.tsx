@@ -89,7 +89,7 @@ export default function Home() {
                                             <img style={{width: 20, height: 20, marginRight: 8}} src="/images/twitter.png"/>
                                         </a> : "";
                                         const youTube = youTubeURL ? <a href={youTubeURL}>
-                                            <img style={{width: 20, height: 20, marginRight: 8}} src="/images/youTube.png"/>
+                                            <img style={{width: 20, height: 20, marginRight: 8}} src="/images/youtube.png"/>
                                         </a> : "";
                                         const twitch = twitchURL ? <a href={twitchURL}>
                                             <img style={{width: 20, height: 20, marginRight: 8}} src="/images/twitch.png"/>
