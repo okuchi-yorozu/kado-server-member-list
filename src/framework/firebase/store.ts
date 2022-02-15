@@ -15,7 +15,7 @@ import DocumentData = firebase.firestore.DocumentData;
 
 const db = getFirestore(app)
 
-export async function addMember(no: string, nickname: string, twitterURL: string, youTubeURL: string, twitchURL: string, role: string) {
+export async function addMember(no: number, nickname: string, twitterURL: string, youTubeURL: string, twitchURL: string, role: string) {
     try {
         const docRef = await addDoc(collection(db, "members"), {
             no,

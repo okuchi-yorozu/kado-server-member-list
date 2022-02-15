@@ -40,7 +40,7 @@ export default function Home() {
     const [twitchURL, setTwitchURL] = useState('');
     const [role, setRole] = useState('');
     const saveFirestore = () => {
-        addMember(no, nickname, twitterURL, youTubeURL, twitchURL, role).then((docRef) => {
+        addMember(parseInt(no,10), nickname, twitterURL, youTubeURL, twitchURL, role).then((docRef) => {
             console.log({docRef});
             setLoading(true)
             setNickname("");
