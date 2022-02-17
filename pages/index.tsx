@@ -23,7 +23,6 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
     },
 }))
 
-// TODO: CSR -> SSR にするとキャッシュが効いて早くなるはず
 export default function Index({members}) {
 
     return (
@@ -33,7 +32,7 @@ export default function Index({members}) {
                 <Typography variant="body1">Vtuber {members?.length} 人で遊んでいるマルチサーバー「KadoServer」です。</Typography>
             </div>
             <div style={{margin: 8}}>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} sx={{width: ['100%', '100%', '70%']}}>
                     <Table size="small">
                         <TableHead>
                             <TableRow>
@@ -83,7 +82,7 @@ type Member = {
     role: string,
 }
 
-// Index ページがリクエストされた場合に、メンバー一覧を取得して、クライアントにページを返す
+// Index ページがリクエストされた場合に、SSR でメンバー一覧を取得して、クライアントにページを返す
 export async function getServerSideProps() {
     const toJSON = (querySnapshot: QuerySnapshot<DocumentData>): Member[] => {
         return querySnapshot.docs.map(row => ({

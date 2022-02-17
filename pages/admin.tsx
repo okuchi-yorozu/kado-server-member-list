@@ -3,10 +3,21 @@ import {addMember, deleteMember, fetchMembers} from "../src/framework/firebase/s
 import {useEffect, useState} from "react";
 import {QueryDocumentSnapshot} from "firebase/firestore";
 import TableCell, {tableCellClasses} from "@mui/material/TableCell";
-import {Box, Paper, Table, TableBody, TableContainer, TableHead, TableRow, TextField, Typography} from "@mui/material";
+import {
+    Box,
+    Paper,
+    Table,
+    TableBody,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Typography
+} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import {useAuthContext} from "../src/framework/context/AuthContext";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {User} from "../src/framework/common/User";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -30,6 +41,87 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
 export default function Admin() {
     const user = useAuthContext();
 
+    const getForm = (currentUser: User | null | undefined) => {
+        switch (currentUser) {
+            case null:
+                return <>
+                    <LoginButton/>
+                </>
+                break;
+            case undefined:
+                return <div/>
+                break;
+            default:
+                return <>
+                    <div style={{margin: 8}}>
+                        <LogoutButton/>
+                    </div>
+                    <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
+                        <div>
+                            <TextField
+                                sx={{m: 1, width: '25ch'}}
+                                label="No."
+                                size="small"
+                                value={no}
+                                onChange={(event) => setNo(event.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <TextField
+                                sx={{m: 1, width: '25ch'}}
+                                label="名前"
+                                size="small"
+                                value={nickname}
+                                onChange={(event) => setNickname(event.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <TextField
+                                sx={{m: 1, width: '25ch'}}
+                                label="Twitter"
+                                size="small"
+                                value={twitterURL}
+                                onChange={(event) => setTwitterURL(event.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <TextField
+                                sx={{m: 1, width: '25ch'}}
+                                label="YouTube"
+                                size="small"
+                                value={youTubeURL}
+                                onChange={(event) => setYouTubeURL(event.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <TextField
+                                sx={{m: 1, width: '25ch'}}
+                                label="Twitch"
+                                size="small"
+                                value={twitchURL}
+                                onChange={(event) => setTwitchURL(event.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <TextField
+                                sx={{m: 1, width: '25ch'}}
+                                label="役割"
+                                size="small"
+                                value={role}
+                                onChange={(event) => setRole(event.target.value)}
+                            />
+                        </div>
+                    </Box>
+                    <div style={{margin: 8}}>
+                        <SaveButton onclick={saveFirestore}/>
+                    </div>
+                </>
+                break;
+        }
+    }
+
     const [isLoading, setLoading] = useState(true);
 
     const [members, setMembers] = useState<Array<QueryDocumentSnapshot>>([]);
@@ -40,7 +132,7 @@ export default function Admin() {
     const [twitchURL, setTwitchURL] = useState('');
     const [role, setRole] = useState('');
     const saveFirestore = () => {
-        addMember(parseInt(no,10), nickname, twitterURL, youTubeURL, twitchURL, role).then((docRef) => {
+        addMember(parseInt(no, 10), nickname, twitterURL, youTubeURL, twitchURL, role).then((docRef) => {
             console.log({docRef});
             setLoading(true)
             setNickname("");
@@ -68,7 +160,7 @@ export default function Admin() {
                 <Typography variant="body1">Vtuber {members?.length} 人で遊んでいるマルチサーバー「KadoServer」です。</Typography>
             </div>
             <div style={{margin: 8}}>
-                <TableContainer component={Paper}>
+                <TableContainer component={Paper} sx={{width: ['100%', '70%', '70%']}}>
                     <Table size="small">
                         <TableHead>
                             <TableRow>
@@ -114,70 +206,7 @@ export default function Admin() {
             <div style={{margin: 8}}>
                 {user.currentUser?.displayName}
             </div>
-            <div style={{margin: 8}}>
-                {user.currentUser ? <LogoutButton/> : <LoginButton/>}
-            </div>
-            <Box sx={{display: 'flex', flexWrap: 'wrap'}}>
-                <div>
-                    <TextField
-                        sx={{m: 1, width: '25ch'}}
-                        label="No."
-                        size="small"
-                        value={no}
-                        onChange={(event) => setNo(event.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <TextField
-                        sx={{m: 1, width: '25ch'}}
-                        label="名前"
-                        size="small"
-                        value={nickname}
-                        onChange={(event) => setNickname(event.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <TextField
-                        sx={{m: 1, width: '25ch'}}
-                        label="Twitter"
-                        size="small"
-                        value={twitterURL}
-                        onChange={(event) => setTwitterURL(event.target.value)}
-                    />
-                </div>
-                <div>
-                    <TextField
-                        sx={{m: 1, width: '25ch'}}
-                        label="YouTube"
-                        size="small"
-                        value={youTubeURL}
-                        onChange={(event) => setYouTubeURL(event.target.value)}
-                    />
-                </div>
-                <div>
-                    <TextField
-                        sx={{m: 1, width: '25ch'}}
-                        label="Twitch"
-                        size="small"
-                        value={twitchURL}
-                        onChange={(event) => setTwitchURL(event.target.value)}
-                    />
-                </div>
-                <div>
-                    <TextField
-                        sx={{m: 1, width: '25ch'}}
-                        label="役割"
-                        size="small"
-                        value={role}
-                        onChange={(event) => setRole(event.target.value)}
-                    />
-                </div>
-            </Box>
-            <div style={{margin: 8}}>
-                <SaveButton onclick={saveFirestore}/>
-            </div>
+            {getForm(user.currentUser)}
         </>
     )
 }
