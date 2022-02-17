@@ -28,7 +28,7 @@ export default function Index({members}) {
     return (
         <>
             <div style={{margin: 8}}>
-                <Typography variant="subtitle1">角酒マイクラサーバ</Typography>
+                <Typography variant="h3" component="div" gutterBottom>角酒マイクラサーバ</Typography>
                 <Typography variant="body1">Vtuber {members?.length} 人で遊んでいるマルチサーバー「KadoServer」です。</Typography>
             </div>
             <div style={{margin: 8}}>
